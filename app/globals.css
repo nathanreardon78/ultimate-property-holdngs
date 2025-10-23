@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --background: #ffffff;
+    --foreground: #171717;
+  }
+
+  html,
+  body {
+    height: 100%;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .font-montserrat {
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .font-opensans {
+    font-family: 'Open Sans', sans-serif;
+  }
+}
+
+@layer utilities {
+  @keyframes hero-zoom {
+    0% {
+      transform: scale(1.06);
+    }
+
+    50% {
+      transform: scale(1.12);
+    }
+
+    100% {
+      transform: scale(1.06);
+    }
+  }
+
+  .animate-hero-zoom {
+    animation: hero-zoom 8s ease-in-out infinite;
+  }
+}
