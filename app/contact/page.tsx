@@ -6,7 +6,7 @@ import { styles } from '@/lib/constants';
 export default function ContactPage(){
   return (
     <div className="space-y-12">
-      <HeroSlider images={[]} headline="Contact Us" subtext="Reach our team for inquiries and tours." />
+      <HeroSlider images={['/logo/uph.jpeg']} headline="Contact Us" subtext="Looking for your next apartment? Contact our team today." />
       <div className={`${styles.container} grid gap-6 lg:grid-cols-3`}>
         <div className={`lg:col-span-2 ${styles.card} ${styles.cardPad}`}>
           <ContactForm />
