@@ -1,4 +1,14 @@
-export type Unit = { id: string; label: string; bedrooms: number; bathrooms: number; sqft: number; rent: number; available: boolean; image?: string };
+export type Unit = {
+  id: string;
+  label: string;
+  bedrooms: number;
+  bathrooms: number;
+  sqft: number;
+  rent: number;
+  available: boolean;
+  image?: string;
+  images?: string[];
+};
 export type Property = {
   id: string; name: string; address: string; city: string; state: string; zip: string;
   status: string; type: string; description: string;
