@@ -14,7 +14,9 @@ export const properties: Property[] = [
       '/images/properties/howland/howland-1.jpeg', '/images/properties/howland/howland-2.jpeg', 
       '/images/properties/howland/howland-3.jpeg', '/images/properties/howland/howland-4.jpeg', 
       '/images/properties/howland/howland-5.jpeg', '/images/properties/howland/howland-6.jpeg', 
-      '/images/properties/howland/howland-7.jpeg'
+      '/images/properties/howland/howland-7.jpeg', '/images/properties/howland/howland-8.jpeg',
+      '/images/properties/howland/howland-9.jpeg', '/images/properties/howland/howland-10.jpeg',
+      '/images/properties/howland/howland-11.jpeg', '/images/properties/howland/howland-12.jpeg',
     ],
     amenities: ['On-site parking', 'Laundry hookups', 'Pet-friendly (w/ approval)', '24/7 maintenance'],
     rentFrom: 0, rentTo: 0,
