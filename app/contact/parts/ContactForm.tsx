@@ -18,14 +18,15 @@ export default function ContactForm(){
   async function onSubmit(e: React.FormEvent<HTMLFormElement>){
     e.preventDefault();
     setOk(null); setErr(null);
-    const fd = new FormData(e.currentTarget);
+    const target = e.currentTarget;
+    const fd = new FormData(target);
     setLoading(true);
     try{
       const res = await fetch('/api/contact', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(Object.fromEntries(fd)) });
       const j = await res.json();
       if(!res.ok) throw new Error(j.error || 'Failed');
       setOk('Thanks! Your message has been sent.');
-      (e.currentTarget as HTMLFormElement).reset();
+      target.reset();
     }catch(e:any){ setErr(e.message); }
     finally{ setLoading(false); }
   }
