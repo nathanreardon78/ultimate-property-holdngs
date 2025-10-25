@@ -1,0 +1,296 @@
+[
+  {
+    "id": "howland-6-main",
+    "name": "6 Main St",
+    "address": "6 Main St, Howland, ME 04448",
+    "city": "Howland",
+    "state": "ME",
+    "zip": "04448",
+    "status": "For Rent",
+    "type": "Apartment Complex",
+    "description": "`Eight-unit residential complex in the heart of Howland. Walkable to local shops and river access. Professionally managed.`",
+    "bedroomsSummary": "Mix of 1–2 BR",
+    "bathsSummary": "1 bath per unit",
+    "sqftApprox": "Varies by unit",
+    "heroImg": "/images/properties/howland/howland-front.jpeg",
+    "gallery": [
+      "/images/properties/howland/howland-1.jpeg",
+      "/images/properties/howland/howland-2.jpeg",
+      "/images/properties/howland/howland-3.jpeg",
+      "/images/properties/howland/howland-4.jpeg",
+      "/images/properties/howland/howland-5.jpeg",
+      "/images/properties/howland/howland-6.jpeg",
+      "/images/properties/howland/howland-7.jpeg",
+      "/images/properties/howland/howland-8.jpeg",
+      "/images/properties/howland/howland-9.jpeg",
+      "/images/properties/howland/howland-10.jpeg",
+      "/images/properties/howland/howland-11.jpeg",
+      "/images/properties/howland/howland-12.jpeg"
+    ],
+    "amenities": [
+      "On-site parking",
+      "Laundry hookups",
+      "Pet-friendly (w/ approval)",
+      "24/7 maintenance"
+    ],
+    "rentFrom": 950,
+    "rentTo": 1250,
+    "units": [
+      {
+        "id": "howland-u1",
+        "label": "Unit 1",
+        "bedrooms": 1,
+        "bathrooms": 1,
+        "sqft": 620,
+        "rent": 950,
+        "available": true,
+        "images": [
+          "/images/properties/howland/howland-1.jpeg",
+          "/images/properties/howland/howland-2.jpeg",
+          "/images/properties/howland/howland-front.jpeg"
+        ],
+        "image": "/images/properties/howland/howland-1.jpeg"
+      },
+      {
+        "id": "howland-u2",
+        "label": "Unit 2",
+        "bedrooms": 2,
+        "bathrooms": 1,
+        "sqft": 780,
+        "rent": 1150,
+        "available": true,
+        "images": [
+          "/images/properties/howland/howland-3.jpeg",
+          "/images/properties/howland/howland-4.jpeg",
+          "/images/properties/howland/howland-5.jpeg"
+        ],
+        "image": "/images/properties/howland/howland-3.jpeg"
+      },
+      {
+        "id": "howland-u3",
+        "label": "Unit 3",
+        "bedrooms": 1,
+        "bathrooms": 1,
+        "sqft": 640,
+        "rent": 975,
+        "available": false,
+        "images": [
+          "/images/properties/howland/howland-6.jpeg",
+          "/images/properties/howland/howland-7.jpeg"
+        ],
+        "image": "/images/properties/howland/howland-6.jpeg"
+      },
+      {
+        "id": "howland-u4",
+        "label": "Unit 4",
+        "bedrooms": 2,
+        "bathrooms": 1,
+        "sqft": 800,
+        "rent": 1195,
+        "available": true,
+        "images": [
+          "/images/properties/howland/howland-8.jpeg",
+          "/images/properties/howland/howland-9.jpeg"
+        ],
+        "image": "/images/properties/howland/howland-8.jpeg"
+      },
+      {
+        "id": "howland-u5",
+        "label": "Unit 5",
+        "bedrooms": 2,
+        "bathrooms": 1,
+        "sqft": 805,
+        "rent": 1225,
+        "available": false,
+        "images": [
+          "/images/properties/howland/howland-10.jpeg",
+          "/images/properties/howland/howland-11.jpeg"
+        ],
+        "image": "/images/properties/howland/howland-10.jpeg"
+      },
+      {
+        "id": "howland-u6",
+        "label": "Unit 6",
+        "bedrooms": 1,
+        "bathrooms": 1,
+        "sqft": 630,
+        "rent": 965,
+        "available": false,
+        "images": [
+          "/images/properties/howland/unit6/howland-1.jpeg",
+          "/images/properties/howland/unit6/howland-2.jpeg",
+          "/images/properties/howland/unit6/howland-3.jpeg",
+          "/images/properties/howland/unit6/howland-4.jpeg",
+          "/images/properties/howland/unit6/howland-5.jpeg",
+          "/images/properties/howland/unit6/howland-6.jpeg",
+          "/images/properties/howland/unit6/howland-7.jpeg",
+          "/images/properties/howland/unit6/howland-8.jpeg",
+          "/images/properties/howland/unit6/howland-9.jpeg",
+          "/images/properties/howland/unit6/howland-10.jpeg",
+          "/images/properties/howland/unit6/howland-11.jpeg",
+          "/images/properties/howland/unit6/howland-12.jpeg"
+        ],
+        "image": "/images/properties/howland/unit6/howland-1.jpeg"
+      },
+      {
+        "id": "howland-u7",
+        "label": "Unit 7",
+        "bedrooms": 2,
+        "bathrooms": 1,
+        "sqft": 790,
+        "rent": 1185,
+        "available": false,
+        "images": [
+          "/images/properties/howland/howland-5.jpeg",
+          "/images/properties/howland/howland-7.jpeg",
+          "/images/properties/howland/howland-9.jpeg"
+        ],
+        "image": "/images/properties/howland/howland-5.jpeg"
+      },
+      {
+        "id": "howland-u8",
+        "label": "Unit 8",
+        "bedrooms": 1,
+        "bathrooms": 1,
+        "sqft": 610,
+        "rent": 945,
+        "available": false,
+        "images": [
+          "/images/properties/howland/howland-2.jpeg",
+          "/images/properties/howland/howland-8.jpeg"
+        ],
+        "image": "/images/properties/howland/howland-2.jpeg"
+      }
+    ],
+    "coordinates": {
+      "lat": 45.241585,
+      "lng": -68.657025
+    }
+  },
+  {
+    "id": "dexter-49-mill",
+    "name": "49 Mill St",
+    "address": "49 Mill St, Dexter, ME 04930",
+    "city": "Dexter",
+    "state": "ME",
+    "zip": "04930",
+    "status": "For Rent",
+    "type": "Duplex",
+    "description": "Quiet complex near Dexter’s town center. Updated interiors and efficient heating.",
+    "bedroomsSummary": "2 BR mix",
+    "bathsSummary": "1 bath per unit",
+    "sqftApprox": "~850 sqft per unit",
+    "heroImg": "/images/properties/dexter/dexter-front.jpeg",
+    "gallery": [
+      "/images/properties/dexter/dexter-front-1.jpeg",
+      "/images/properties/dexter/dexter-1.png",
+      "/images/properties/dexter/dexter-2.png",
+      "/images/properties/dexter/dexter-3.png",
+      "/images/properties/dexter/dexter-4.png",
+      "/images/properties/dexter/dexter-5.png",
+      "/images/properties/dexter/dexter-6.png",
+      "/images/properties/dexter/dexter-7.png",
+      "/images/properties/dexter/dexter-8.png",
+      "/images/properties/dexter/dexter-9.png",
+      "/images/properties/dexter/dexter-10.png"
+    ],
+    "amenities": [
+      "Driveway parking",
+      "Backyard",
+      "Updated kitchens",
+      "Snow removal included"
+    ],
+    "rentFrom": 1100,
+    "rentTo": 1200,
+    "units": [
+      {
+        "id": "dexter-u1",
+        "label": "Unit 1",
+        "bedrooms": 2,
+        "bathrooms": 1,
+        "sqft": 860,
+        "rent": 1150,
+        "available": true,
+        "images": [
+          "/images/properties/dexter/dexter-front-1.jpeg",
+          "/images/properties/dexter/unit1/dexter-1.png",
+          "/images/properties/dexter/unit1/dexter-2.png",
+          "/images/properties/dexter/unit1/dexter-3.png",
+          "/images/properties/dexter/unit1/dexter-4.png",
+          "/images/properties/dexter/unit1/dexter-5.png",
+          "/images/properties/dexter/unit1/dexter-6.png",
+          "/images/properties/dexter/unit1/dexter-7.png",
+          "/images/properties/dexter/unit1/dexter-8.png",
+          "/images/properties/dexter/unit1/dexter-9.png",
+          "/images/properties/dexter/unit1/dexter-10.png"
+        ],
+        "image": "/images/properties/dexter/dexter-front-1.jpeg"
+      },
+      {
+        "id": "dexter-u2",
+        "label": "Unit 2",
+        "bedrooms": 2,
+        "bathrooms": 1,
+        "sqft": 845,
+        "rent": 1125,
+        "available": false,
+        "images": [
+          "/images/properties/dexter/dexter-4.png",
+          "/images/properties/dexter/dexter-5.png",
+          "/images/properties/dexter/dexter-6.png",
+          "/images/properties/dexter/dexter-7.png"
+        ],
+        "image": "/images/properties/dexter/dexter-4.png"
+      }
+    ],
+    "coordinates": {
+      "lat": 45.0234,
+      "lng": -69.2916
+    }
+  },
+  {
+    "id": "pittsfield-115-somerset",
+    "name": "115 Somerset Ave",
+    "address": "115 Somerset Ave, Pittsfield, ME 04967",
+    "city": "Pittsfield",
+    "state": "ME",
+    "zip": "04967",
+    "status": "",
+    "type": "Single Unit 3-Bedroom Home",
+    "description": "Single unit, three-bedroom home on Somerset Ave. Bright interior, private yard, and close to schools.",
+    "bedroomsSummary": "3 BR",
+    "bathsSummary": "1 bath",
+    "sqftApprox": "~1,150 sqft",
+    "heroImg": "/images/properties/pittsfield/pittsfield-front.jpeg",
+    "gallery": [
+      "/images/properties/pittsfield/pittsfield-front.jpeg"
+    ],
+    "amenities": [
+      "Yard",
+      "Washer/Dryer",
+      "Basement storage",
+      "Pets considered"
+    ],
+    "rentFrom": 1550,
+    "rentTo": 1550,
+    "units": [
+      {
+        "id": "pittsfield-main",
+        "label": "Whole Home",
+        "bedrooms": 3,
+        "bathrooms": 1,
+        "sqft": 1150,
+        "rent": 1550,
+        "available": true,
+        "images": [
+          "/images/properties/pittsfield/pittsfield-front.jpeg"
+        ],
+        "image": "/images/properties/pittsfield/pittsfield-front.jpeg"
+      }
+    ],
+    "coordinates": {
+      "lat": 44.7826,
+      "lng": -69.3839
+    }
+  }
+]

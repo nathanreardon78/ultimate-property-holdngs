@@ -5,9 +5,15 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "db:push": "prisma db push",
+    "prisma:generate": "prisma generate"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.916.0",
+    "@prisma/client": "^6.18.0",
+    "country-state-city": "^3.2.1",
+    "jose": "^6.1.0",
     "lucide-react": "^0.546.0",
     "next": "16.0.0",
     "react": "19.2.0",
@@ -19,6 +25,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "prisma": "^6.18.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

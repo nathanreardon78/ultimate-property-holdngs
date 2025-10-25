@@ -1,10 +1,13 @@
-import { properties } from '@/lib/data';
 import PropertyCard from '@/components/PropertyCard';
 import HeroSlider from '@/components/HeroSlider';
 import { styles } from '@/lib/constants';
 import { Building2, MapPin, Wrench } from 'lucide-react';
+import { listProperties } from '@/lib/properties';
 
-export default function HomePage(){
+export const dynamic = 'force-dynamic';
+
+export default async function HomePage(){
+  const properties = await listProperties();
   return (
     <div className="space-y-16">
       <HeroSlider images={['/images/hero/howland-front.jpeg','/images/hero/pittsfield-front.jpeg','/images/hero/dexter-front.jpeg']} headline="Modern Living. Smart Investments." subtext="Premium residential apartments managed by Ultimate Property Holdings." />
@@ -39,7 +42,13 @@ export default function HomePage(){
           </a>
         </div>
         <div className="mt-4 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {properties.map(p => (<PropertyCard key={p.id} p={p} />))}
+          {properties.length === 0 ? (
+            <div className={`${styles.card} ${styles.cardPad} text-sm text-gray-600`}>
+              New listings will appear here soon. Check back shortly.
+            </div>
+          ) : (
+            properties.map(p => (<PropertyCard key={p.id} p={p} />))
+          )}
         </div>
       </section>
     </div>

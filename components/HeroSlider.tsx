@@ -12,8 +12,8 @@ export default function HeroSlider({ images, headline, subtext }:{ images: strin
   }, [imgs.length]);
 
   return (
-    <section className={styles.fullBleed}>
-      <div className={styles.hero}>
+    <section className={`${styles.fullBleed} overflow-hidden`}>
+      <div className={`${styles.hero} overflow-hidden`}>
         {imgs.map((src, i)=>(
           <div
             key={src}
@@ -25,6 +25,7 @@ export default function HeroSlider({ images, headline, subtext }:{ images: strin
               fill
               className={styles.heroImg}
               priority={i===0}
+              unoptimized
             />
           </div>
         ))}

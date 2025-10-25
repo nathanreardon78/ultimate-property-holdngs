@@ -1,7 +1,9 @@
 import HeroSlider from '@/components/HeroSlider';
 import { styles } from '@/lib/constants';
-import { properties } from '@/lib/data';
+import { listProperties } from '@/lib/properties';
 import { Building2, HeartHandshake, ShieldCheck } from 'lucide-react';
+
+export const dynamic = 'force-dynamic';
 
 const leadership = [
   {
@@ -18,8 +20,10 @@ const markerPositions: Record<string, { top: string; left: string; }> = {
   'pittsfield-115-somerset': { top: '56%', left: '48%' },
 };
 
-export default function AboutPage(){
-  const totalUnits = properties.reduce((sum, property)=> sum + property.units.length, 0);
+export default async function AboutPage(){
+  const properties = await listProperties();
+  const totalUnits = properties.reduce((sum, property)=>
+    sum + property.units.filter(unit => !unit.isHidden).length, 0);
   const cities = Array.from(new Set(properties.map((property)=> property.city)));
   const propertyTypes = Array.from(new Set(properties.map((property)=> property.type)));
 
@@ -147,17 +151,19 @@ export default function AboutPage(){
           <div className={`${styles.card} ${styles.cardPad}`}>
             <h3 className="font-montserrat text-lg font-semibold text-gray-900">Portfolio Snapshot</h3>
             <ul className="mt-4 space-y-3 text-sm text-gray-700">
-              {properties.map((property)=>(
+              {properties.map((property)=>{
+                const visibleUnits = property.units.filter((unit)=> !unit.isHidden);
+                return (
                 <li key={property.id} className="flex items-start justify-between gap-4 border-b border-gray-200 pb-3 last:border-none last:pb-0">
                   <div>
                     <div className="font-semibold text-gray-900">{property.name}</div>
                     <div className="text-xs uppercase tracking-wide text-gray-500">{property.city}, {property.state}</div>
                   </div>
                   <div className="text-xs text-gray-500">
-                    {property.units.length} units • {property.type}
+                    {visibleUnits.length} units • {property.type}
                   </div>
                 </li>
-              ))}
+              );})}
             </ul>
           </div>
 

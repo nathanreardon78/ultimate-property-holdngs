@@ -1,0 +1,83 @@
+---
+title: Ultimate Property Holdings – Database Schema
+---
+erDiagram
+  Property {
+    string id PK
+    string slug UK
+    datetime createdAt
+    datetime updatedAt
+    string name
+    string address
+    string city
+    string state
+    string zip
+    string status
+    string type
+    string description
+    string bedroomsSummary
+    string bathsSummary
+    string sqftApprox
+    string heroImageUrl
+    string heroImageKey
+    int rentFrom
+    int rentTo
+    float latitude
+    float longitude
+    boolean hasUnits
+    string[] amenities
+  }
+
+  PropertyImage {
+    string id PK
+    datetime createdAt
+    int order
+    string url
+    string storageKey
+    string caption
+    string propertyId FK
+  }
+
+  Unit {
+    string id PK
+    datetime createdAt
+    datetime updatedAt
+    string label
+    int bedrooms
+    int bathrooms
+    int sqft
+    int rent
+    boolean available
+    boolean isHidden
+    string coverImage
+    string coverImageKey
+    string propertyId FK
+  }
+
+  UnitImage {
+    string id PK
+    datetime createdAt
+    int order
+    string url
+    string storageKey
+    string caption
+    string unitId FK
+  }
+
+  MaintenanceRequest {
+    string id PK
+    datetime createdAt
+    string name
+    string phone
+    string address
+    string issueType
+    string entryPermission
+    string description
+    string attachmentUrl
+    string attachmentKey
+    string status
+  }
+
+  Property ||--o{ PropertyImage : "has many"
+  Property ||--o{ Unit : "has many"
+  Unit ||--o{ UnitImage : "has many"

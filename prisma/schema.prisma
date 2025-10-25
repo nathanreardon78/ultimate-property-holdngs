@@ -1,0 +1,91 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Property {
+  id              String          @id @default(uuid())
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  name            String
+  slug            String          @unique
+  address         String
+  city            String
+  state           String
+  zip             String
+  status          String?
+  type            String
+  description     String
+  bedroomsSummary String?
+  bathsSummary    String?
+  sqftApprox      String?
+  heroImageUrl    String
+  heroImageKey    String?
+  rentFrom        Int?
+  rentTo          Int?
+  latitude        Float?
+  longitude       Float?
+  amenities       String[]
+  hasUnits        Boolean         @default(false)
+  images          PropertyImage[]
+  units           Unit[]
+}
+
+model PropertyImage {
+  id         String   @id @default(uuid())
+  createdAt  DateTime @default(now())
+  order      Int      @default(0)
+  url        String
+  storageKey String?
+  propertyId String
+  caption    String?
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+}
+
+model Unit {
+  id            String      @id @default(uuid())
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  label         String
+  bedrooms      Int
+  bathrooms     Int
+  sqft          Int
+  rent          Int?
+  available     Boolean     @default(false)
+  isHidden      Boolean     @default(false)
+  coverImage    String?
+  coverImageKey String?
+  propertyId    String
+  property      Property    @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  images        UnitImage[]
+}
+
+model UnitImage {
+  id         String   @id @default(uuid())
+  createdAt  DateTime @default(now())
+  order      Int      @default(0)
+  url        String
+  storageKey String?
+  unitId     String
+  caption    String?
+  unit       Unit     @relation(fields: [unitId], references: [id], onDelete: Cascade)
+}
+
+model MaintenanceRequest {
+  id              String   @id @default(uuid())
+  createdAt       DateTime @default(now())
+  name            String
+  phone           String
+  address         String
+  issueType       String
+  entryPermission String
+  description     String
+  attachmentUrl   String?
+  attachmentKey   String?
+  status          String   @default("new")
+}

@@ -19,7 +19,7 @@ export const tokens = {
 export const styles = {
   // Layout & Containers
   container: 'mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8',
-  fullBleed: 'relative left-1/2 w-screen max-w-none -translate-x-1/2',
+  fullBleed: 'relative left-1/2 w-screen max-w-none -translate-x-1/2 overflow-hidden',
   header:
     'sticky top-0 z-50 border-b border-gray-200 bg-white/90 backdrop-blur-md',
   nav: 'hidden items-center gap-1 md:flex',
