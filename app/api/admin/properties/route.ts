@@ -38,7 +38,7 @@ export async function POST(request: Request){
   const heroFieldName = payload.heroImageField as string;
   const heroFile = formData.get(heroFieldName);
   if (!(heroFile instanceof File) || heroFile.size === 0){
-    return NextResponse.json({ message: 'Hero image is required.' }, { status: 400 });
+    return NextResponse.json({ message: 'Property image is required.' }, { status: 400 });
   }
 
   const slug = await generateUniquePropertySlug(payload.name);

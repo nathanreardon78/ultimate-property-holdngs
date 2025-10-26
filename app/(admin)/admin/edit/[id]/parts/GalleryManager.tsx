@@ -59,13 +59,13 @@ export default function GalleryManager({ propertyId, images }: Props){
   return (
     <section className={`${styles.card} ${styles.cardPad} space-y-4`}>
       <div>
-        <h2 className="font-montserrat text-lg font-semibold text-gray-900">Gallery</h2>
-        <p className="text-sm text-gray-600">Supplement the hero image with interior or exterior shots.</p>
+        <h2 className="font-montserrat text-lg font-semibold text-gray-900">Other images</h2>
+        <p className="text-sm text-gray-600">Supplement the property image with interior or exterior shots.</p>
       </div>
       <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-4">
         {images.map((image)=> (
           <div key={image.id} className="group relative overflow-hidden rounded-xl border">
-            <Image src={image.url} alt="Gallery" width={400} height={300} className="h-40 w-full object-cover" unoptimized />
+            <Image src={image.url} alt="Other property image" width={400} height={300} className="h-40 w-full object-cover" unoptimized />
             <button
               type="button"
               onClick={()=> handleDelete(image)}
@@ -77,7 +77,7 @@ export default function GalleryManager({ propertyId, images }: Props){
         ))}
         {images.length === 0 && (
           <div className="flex h-40 items-center justify-center rounded-xl border border-dashed border-gray-300 text-sm text-gray-500">
-            No gallery images yet
+            No other images yet
           </div>
         )}
       </div>
@@ -98,7 +98,7 @@ export default function GalleryManager({ propertyId, images }: Props){
           className={`${styles.btn} ${styles.btnPrimary}`}
           disabled={!files.length || pending}
         >
-          {pending ? 'Uploading…' : 'Add to gallery'}
+          {pending ? 'Uploading…' : 'Add images'}
         </button>
       </div>
     </section>

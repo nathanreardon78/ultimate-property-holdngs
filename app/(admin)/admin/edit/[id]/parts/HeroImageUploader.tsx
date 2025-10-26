@@ -29,7 +29,7 @@ export default function HeroImageUploader({ propertyId, heroImageUrl }: Props){
       });
       if (!response.ok){
         const data = await response.json().catch(()=> null);
-        throw new Error(data?.message || 'Failed to update hero image.');
+        throw new Error(data?.message || 'Failed to update property image.');
       }
       setFile(null);
       router.refresh();
@@ -48,7 +48,7 @@ export default function HeroImageUploader({ propertyId, heroImageUrl }: Props){
           {heroImageUrl ? (
             <Image
               src={heroImageUrl}
-              alt="Hero preview"
+              alt="Property image preview"
               fill
               className="object-cover"
               unoptimized
@@ -56,13 +56,13 @@ export default function HeroImageUploader({ propertyId, heroImageUrl }: Props){
             />
           ) : (
             <div className="flex h-full items-center justify-center text-sm text-gray-500">
-              No hero image yet
+              No property image yet
             </div>
           )}
         </div>
         <div className={`${styles.cardPad} space-y-3`}>
           <div>
-            <h2 className="font-montserrat text-lg font-semibold text-gray-900">Hero image</h2>
+            <h2 className="font-montserrat text-lg font-semibold text-gray-900">Property image</h2>
             <p className="text-sm text-gray-600">
               Upload a high-resolution landscape photo. This anchors the public-facing detail page.
             </p>
@@ -83,7 +83,7 @@ export default function HeroImageUploader({ propertyId, heroImageUrl }: Props){
             className={`${styles.btn} ${styles.btnPrimary}`}
             disabled={!file || pending}
           >
-            {pending ? 'Uploading…' : 'Update hero image'}
+            {pending ? 'Uploading…' : 'Update property image'}
           </button>
         </div>
       </div>

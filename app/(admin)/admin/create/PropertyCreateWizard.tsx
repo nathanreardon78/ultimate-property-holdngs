@@ -46,7 +46,7 @@ const INITIAL_UNIT: UnitForm = {
 
 const steps = [
   { id: 'basics', title: 'Basics', description: 'Core property details and location.' },
-  { id: 'media', title: 'Media', description: 'Hero image, galleries, and amenities.' },
+  { id: 'media', title: 'Media', description: 'Property image, other images, and amenities.' },
   { id: 'units', title: 'Units', description: 'Configure unit availability and pricing.' },
 ];
 
@@ -166,7 +166,7 @@ export default function PropertyCreateWizard(){
     }
     if (step === 1){
       if (!heroFile){
-        setError('Upload a hero image to continue.');
+        setError('Upload a property image to continue.');
         return false;
       }
     }
@@ -203,7 +203,7 @@ export default function PropertyCreateWizard(){
   async function handleSubmit(){
     if (!validateCurrentStep()) return;
     if (!heroFile){
-      setError('Hero image is required.');
+      setError('Property image is required.');
       return;
     }
     setPending(true);
@@ -479,7 +479,7 @@ export default function PropertyCreateWizard(){
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
                   <label className="text-sm font-semibold text-gray-700">
-                    Hero image
+                    Property image
                     <Tooltip text="Displayed at the top of the property detail page. Landscape images work best." />
                   </label>
                   <input
@@ -495,7 +495,7 @@ export default function PropertyCreateWizard(){
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-semibold text-gray-700">
-                    Gallery images
+                    Other images
                     <Tooltip text="Optional supporting photos for the property-level carousel." />
                   </label>
                   <input
@@ -623,7 +623,7 @@ export default function PropertyCreateWizard(){
                         </div>
                         <div className="space-y-2">
                           <label className="text-sm font-semibold text-gray-700">
-                            Gallery
+                            Other images
                             <Tooltip text="Upload interior shots for the lightbox carousel." />
                           </label>
                           <input

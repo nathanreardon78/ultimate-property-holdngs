@@ -8,7 +8,7 @@ export async function POST(request: NextRequest, context: { params: Promise<{ id
   const file = formData.get('file');
 
   if (!(file instanceof File) || file.size === 0){
-    return NextResponse.json({ message: 'Hero image file is required.' }, { status: 400 });
+    return NextResponse.json({ message: 'Property image file is required.' }, { status: 400 });
   }
 
   const property = await prisma.property.findUnique({

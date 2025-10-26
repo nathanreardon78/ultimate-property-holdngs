@@ -24,6 +24,32 @@ type UnitDraft = {
   galleryDetails: Array<{ id: string; url: string }>;
 };
 
+type NewUnitState = {
+  label: string;
+  bedrooms: string;
+  bathrooms: string;
+  sqft: string;
+  rent: string;
+  available: boolean;
+  isHidden: boolean;
+  cover: File | null;
+  gallery: File[];
+};
+
+function createEmptyNewUnit(): NewUnitState{
+  return {
+    label: '',
+    bedrooms: '',
+    bathrooms: '',
+    sqft: '',
+    rent: '',
+    available: true,
+    isHidden: false,
+    cover: null,
+    gallery: [],
+  };
+}
+
 export default function UnitsManager({ propertyId, units }: Props){
   const router = useRouter();
   const [_isRefreshing, startTransition] = useTransition();
@@ -46,17 +72,7 @@ export default function UnitsManager({ propertyId, units }: Props){
   });
 
   const [newUnitVisible, setNewUnitVisible] = useState(false);
-  const [newUnit, setNewUnit] = useState({
-    label: '',
-    bedrooms: '',
-    bathrooms: '',
-    sqft: '',
-    rent: '',
-    available: true,
-    isHidden: false,
-    cover: null as File | null,
-    gallery: [] as File[],
-  });
+  const [newUnit, setNewUnit] = useState<NewUnitState>(createEmptyNewUnit);
   const [isCreating, setIsCreating] = useState(false);
   const [pendingUnitId, setPendingUnitId] = useState<string | null>(null);
   const [deletingUnitId, setDeletingUnitId] = useState<string | null>(null);
@@ -170,6 +186,8 @@ export default function UnitsManager({ propertyId, units }: Props){
       return;
     }
     setIsCreating(true);
+    const coverFile = newUnit.cover;
+    const galleryFiles = newUnit.gallery;
     try {
       const response = await fetch(`/api/admin/properties/${propertyId}/units`, {
         method: 'POST',
@@ -193,18 +211,24 @@ export default function UnitsManager({ propertyId, units }: Props){
       const data = await response.json();
       const unitId: string | undefined = data?.unit?.id;
 
+      setNewUnitVisible(false);
+      setNewUnit(createEmptyNewUnit());
+      startTransition(()=> router.refresh());
+
       if (unitId){
-        if (newUnit.cover){
-          await uploadCover(unitId, newUnit.cover, { skipRefresh: true });
+        let needsRefreshAfterUploads = false;
+        if (coverFile){
+          const uploaded = await uploadCover(unitId, coverFile, { skipRefresh: true });
+          needsRefreshAfterUploads ||= uploaded;
         }
-        if (newUnit.gallery.length){
-          await uploadGallery(unitId, newUnit.gallery, { skipRefresh: true });
+        if (galleryFiles.length){
+          const uploaded = await uploadGallery(unitId, galleryFiles, { skipRefresh: true });
+          needsRefreshAfterUploads ||= uploaded;
+        }
+        if (needsRefreshAfterUploads){
+          startTransition(()=> router.refresh());
         }
       }
-
-      setNewUnitVisible(false);
-      setNewUnit({ label: '', bedrooms: '', bathrooms: '', sqft: '', rent: '', available: true, isHidden: false, cover: null, gallery: [] });
-      startTransition(()=> router.refresh());
     } catch (error) {
       console.error(error);
       alert('Unable to add unit. Please try again.');
@@ -264,7 +288,7 @@ export default function UnitsManager({ propertyId, units }: Props){
             </div>
             <div className="space-y-2">
               <label className="text-sm font-semibold text-gray-700" title="Upload multiple interior shots to build the unit gallery.">
-                Gallery images
+                Other images
               </label>
               <input
                 type="file"
@@ -344,7 +368,7 @@ export default function UnitsManager({ propertyId, units }: Props){
                       />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-sm font-semibold text-gray-700">Add gallery images</label>
+                      <label className="text-sm font-semibold text-gray-700">Add other images</label>
                       <input
                         type="file"
                         accept="image/*"
