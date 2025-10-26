@@ -1,25 +1,31 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { uploadFileToS3 } from '@/lib/storage';
+
+type UnitPayload = {
+  label?: string;
+  bedrooms?: string | number;
+  bathrooms?: string | number;
+  sqft?: string | number;
+  rent?: string | number | null;
+  available?: boolean;
+  isHidden?: boolean;
+};
 
 export async function POST(request: NextRequest, context: { params: Promise<{ id: string }> }){
   const { id } = await context.params;
-  const formData = await request.formData();
-  const rawPayload = formData.get('payload');
-
-  if (typeof rawPayload !== 'string'){
-    return NextResponse.json({ message: 'Missing payload.' }, { status: 400 });
-  }
-
-  let payload: any;
+  let payload: UnitPayload;
   try {
-    payload = JSON.parse(rawPayload);
+    payload = await request.json();
   } catch {
-    return NextResponse.json({ message: 'Invalid payload JSON.' }, { status: 400 });
+    return NextResponse.json({ message: 'Invalid JSON payload.' }, { status: 400 });
   }
 
-  const required = ['label', 'bedrooms', 'bathrooms', 'sqft'];
-  const missing = required.filter((field)=> !payload[field] && payload[field] !== 0);
+  if (!payload || typeof payload !== 'object'){
+    return NextResponse.json({ message: 'Unit details are required.' }, { status: 400 });
+  }
+
+  const required: Array<keyof UnitPayload> = ['label', 'bedrooms', 'bathrooms', 'sqft'];
+  const missing = required.filter((field)=> payload[field] === undefined || payload[field] === null || payload[field] === '');
   if (missing.length){
     return NextResponse.json({ message: `Missing fields: ${missing.join(', ')}` }, { status: 400 });
   }
@@ -27,24 +33,6 @@ export async function POST(request: NextRequest, context: { params: Promise<{ id
   const property = await prisma.property.findUnique({ where: { id } });
   if (!property){
     return NextResponse.json({ message: 'Property not found.' }, { status: 404 });
-  }
-
-  const prefixBase = `properties/${property.slug || id}/units/${Date.now()}`;
-  let cover: { url: string; key: string } | null = null;
-  if (payload.coverImageField){
-    const coverFile = formData.get(payload.coverImageField);
-    if (coverFile instanceof File && coverFile.size > 0){
-      cover = await uploadFileToS3(coverFile, `${prefixBase}/cover`);
-    }
-  }
-
-  const galleryUploads: Array<{ url: string; key: string }> = [];
-  for (const field of payload.galleryFields ?? []){
-    const file = formData.get(field);
-    if (file instanceof File && file.size > 0){
-      const upload = await uploadFileToS3(file, `${prefixBase}/gallery`);
-      galleryUploads.push(upload);
-    }
   }
 
   let rent: number | null = null;
@@ -64,6 +52,9 @@ export async function POST(request: NextRequest, context: { params: Promise<{ id
     return NextResponse.json({ message: 'Bedrooms, bathrooms, and square footage must be numbers.' }, { status: 400 });
   }
 
+  const available = payload.available === undefined ? true : Boolean(payload.available);
+  const isHidden = Boolean(payload.isHidden);
+
   const unit = await prisma.unit.create({
     data: {
       propertyId: id,
@@ -72,17 +63,8 @@ export async function POST(request: NextRequest, context: { params: Promise<{ id
       bathrooms,
       sqft,
       rent,
-      available: Boolean(payload.available),
-      isHidden: Boolean(payload.isHidden),
-      coverImage: cover?.url ?? null,
-      coverImageKey: cover?.key ?? null,
-      images: {
-        create: galleryUploads.map((upload, index)=> ({
-          url: upload.url,
-          storageKey: upload.key,
-          order: index,
-        })),
-      },
+      available,
+      isHidden,
     },
     include: { images: true },
   });

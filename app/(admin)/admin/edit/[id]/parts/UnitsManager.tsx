@@ -110,8 +110,8 @@ export default function UnitsManager({ propertyId, units }: Props){
     setDeletingUnitId(null);
   }
 
-  async function uploadCover(id: string, file: File | null){
-    if (!file) return;
+  async function uploadCover(id: string, file: File | null, options?: { skipRefresh?: boolean }){
+    if (!file) return true;
     const formData = new FormData();
     formData.append('file', file);
     const response = await fetch(`/api/admin/properties/${propertyId}/units/${id}/cover`, {
@@ -121,25 +121,34 @@ export default function UnitsManager({ propertyId, units }: Props){
     if (!response.ok){
       const data = await response.json().catch(()=> null);
       alert(data?.message || 'Failed to upload cover image.');
-      return;
+      return false;
     }
-    startTransition(()=> router.refresh());
+    if (!options?.skipRefresh){
+      startTransition(()=> router.refresh());
+    }
+    return true;
   }
 
-  async function uploadGallery(id: string, files: File[]){
-    if (!files.length) return;
-    const formData = new FormData();
-    files.forEach((file)=> formData.append('files', file));
-    const response = await fetch(`/api/admin/properties/${propertyId}/units/${id}/gallery`, {
-      method: 'POST',
-      body: formData,
-    });
-    if (!response.ok){
-      const data = await response.json().catch(()=> null);
-      alert(data?.message || 'Failed to upload gallery images.');
-      return;
+  async function uploadGallery(id: string, files: File[], options?: { skipRefresh?: boolean }){
+    const queue = files.filter((file)=> file instanceof File && file.size > 0);
+    if (!queue.length) return true;
+    for (const file of queue){
+      const formData = new FormData();
+      formData.append('files', file);
+      const response = await fetch(`/api/admin/properties/${propertyId}/units/${id}/gallery`, {
+        method: 'POST',
+        body: formData,
+      });
+      if (!response.ok){
+        const data = await response.json().catch(()=> null);
+        alert(data?.message || `Failed to upload ${file.name}.`);
+        return false;
+      }
     }
-    startTransition(()=> router.refresh());
+    if (!options?.skipRefresh){
+      startTransition(()=> router.refresh());
+    }
+    return true;
   }
 
   async function deleteGalleryImage(id: string, imageId: string){
@@ -161,35 +170,47 @@ export default function UnitsManager({ propertyId, units }: Props){
       return;
     }
     setIsCreating(true);
-    const formData = new FormData();
-    const payload = {
-      label: newUnit.label,
-      bedrooms: newUnit.bedrooms,
-      bathrooms: newUnit.bathrooms,
-      sqft: newUnit.sqft,
-      rent: newUnit.rent,
-      available: newUnit.available,
-      isHidden: newUnit.isHidden,
-      coverImageField: newUnit.cover ? 'cover' : null,
-      galleryFields: newUnit.gallery.map((_, index)=> `gallery-${index}`),
-    };
-    formData.append('payload', JSON.stringify(payload));
-    if (newUnit.cover) formData.append('cover', newUnit.cover);
-    newUnit.gallery.forEach((file, index)=> formData.append(`gallery-${index}`, file));
-    const response = await fetch(`/api/admin/properties/${propertyId}/units`, {
-      method: 'POST',
-      body: formData,
-    });
-    if (!response.ok){
-      const data = await response.json().catch(()=> null);
-      alert(data?.message || 'Failed to add unit.');
+    try {
+      const response = await fetch(`/api/admin/properties/${propertyId}/units`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          label: newUnit.label,
+          bedrooms: newUnit.bedrooms,
+          bathrooms: newUnit.bathrooms,
+          sqft: newUnit.sqft,
+          rent: newUnit.rent,
+          available: newUnit.available,
+          isHidden: newUnit.isHidden,
+        }),
+      });
+      if (!response.ok){
+        const data = await response.json().catch(()=> null);
+        alert(data?.message || 'Failed to add unit.');
+        return;
+      }
+
+      const data = await response.json();
+      const unitId: string | undefined = data?.unit?.id;
+
+      if (unitId){
+        if (newUnit.cover){
+          await uploadCover(unitId, newUnit.cover, { skipRefresh: true });
+        }
+        if (newUnit.gallery.length){
+          await uploadGallery(unitId, newUnit.gallery, { skipRefresh: true });
+        }
+      }
+
+      setNewUnitVisible(false);
+      setNewUnit({ label: '', bedrooms: '', bathrooms: '', sqft: '', rent: '', available: true, isHidden: false, cover: null, gallery: [] });
+      startTransition(()=> router.refresh());
+    } catch (error) {
+      console.error(error);
+      alert('Unable to add unit. Please try again.');
+    } finally {
       setIsCreating(false);
-      return;
     }
-    setNewUnitVisible(false);
-    setNewUnit({ label: '', bedrooms: '', bathrooms: '', sqft: '', rent: '', available: true, isHidden: false, cover: null, gallery: [] });
-    startTransition(()=> router.refresh());
-    setIsCreating(false);
   }
 
   return (
@@ -313,11 +334,26 @@ export default function UnitsManager({ propertyId, units }: Props){
                     <Field label="Rent" value={unit.rent} onChange={(value)=> updateDraft(unit.id, { rent: value })} />
                     <div className="space-y-2">
                       <label className="text-sm font-semibold text-gray-700">Update cover</label>
-                      <input type="file" accept="image/*" className={styles.inputBase} onChange={(event)=> uploadCover(unit.id, event.target.files?.[0] ?? null)} />
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className={styles.inputBase}
+                        onChange={(event)=> {
+                          void uploadCover(unit.id, event.target.files?.[0] ?? null);
+                        }}
+                      />
                     </div>
                     <div className="space-y-2">
                       <label className="text-sm font-semibold text-gray-700">Add gallery images</label>
-                      <input type="file" accept="image/*" multiple className={styles.inputBase} onChange={(event)=> uploadGallery(unit.id, event.target.files ? Array.from(event.target.files) : [])} />
+                      <input
+                        type="file"
+                        accept="image/*"
+                        multiple
+                        className={styles.inputBase}
+                        onChange={(event)=> {
+                          void uploadGallery(unit.id, event.target.files ? Array.from(event.target.files) : []);
+                        }}
+                      />
                     </div>
                   </div>
                   <div className="flex flex-wrap gap-3">
