@@ -30,6 +30,11 @@ export async function POST(request: NextRequest, context: { params: Promise<{ id
     return NextResponse.json({ message: `Missing fields: ${missing.join(', ')}` }, { status: 400 });
   }
 
+  const label = String(payload.label ?? '').trim();
+  if (!label){
+    return NextResponse.json({ message: 'Label must be provided.' }, { status: 400 });
+  }
+
   const property = await prisma.property.findUnique({ where: { id } });
   if (!property){
     return NextResponse.json({ message: 'Property not found.' }, { status: 404 });
@@ -58,7 +63,7 @@ export async function POST(request: NextRequest, context: { params: Promise<{ id
   const unit = await prisma.unit.create({
     data: {
       propertyId: id,
-      label: payload.label,
+      label,
       bedrooms,
       bathrooms,
       sqft,
